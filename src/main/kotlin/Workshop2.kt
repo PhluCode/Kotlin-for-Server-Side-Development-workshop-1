@@ -22,11 +22,7 @@ fun main() {
     // --- โจทย์: จงหาผลรวมราคาสินค้าทั้งหมดในหมวด 'Electronics' ที่มีราคามากกว่า 500 บาท ---
 
     // 3. วิธีที่ 1: การใช้ Chaining กับ List โดยตรง
-    val totalElecPriceOver500 = products
-        .filter { it.category == "Electronics" }   // กรองสินค้าหมวด Electronics
-        .filter { it.price > 500 }                 // กรองสินค้าที่ราคามากกว่า 500
-        .map { it.price }                          // ดึงเฉพาะราคาออกมาเป็น List<Double>
-        .sum()                                     // หาผลรวมของราคา
+    val totalElecPriceOver500 = calculateTotalElecPriceOver500(products)                     // หาผลรวมของราคา
 
     println("วิธีที่ 1: ใช้ Chaining กับ List")
     println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500 บาท")
@@ -59,4 +55,12 @@ fun main() {
     println("   - เช่น: 'Laptop' จะถูก filter category -> filter price -> map price จากนั้น 'Smartphone' ถึงจะเริ่มทำกระบวนการเดียวกัน")
     println("   - จะไม่มีการสร้าง Collection กลางทาง ทำให้ประหยัดหน่วยความจำและเร็วกว่ามากสำหรับชุดข้อมูลขนาดใหญ่ เพราะทำงานกับข้อมูลทีละชิ้นและทำทุกขั้นตอนให้เสร็จในรอบเดียว")
     println("   - การคำนวณจะเกิดขึ้นเมื่อมี 'Terminal Operation' มาเรียกใช้เท่านั้น (ในที่นี้คือ .sum())")
+}
+
+fun calculateTotalElecPriceOver500(products: List<Product>): Double {
+    return products
+        .filter { it.category == "Electronics" }
+        .filter { it.price > 500 }
+        .map { it.price }
+        .sum()
 }
